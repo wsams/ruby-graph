@@ -16,15 +16,15 @@ class RubyGraph
         @x_precision = 1
         @y_precision = 1
 
-        @x_pos_units = 200
+        @x_pos_units = 20
+        @x_neg_units = 20
         @y_pos_units = 200
-        @x_neg_units = 200
-        @y_neg_units = 200
+        @y_neg_units = 20
     end
 
     # Internal: This is where you define the equation you want to graph
     def fn x
-        x
+        x ** 2
     end
 
     # Public: Call this method to produce graph.png
