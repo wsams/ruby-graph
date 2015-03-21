@@ -2,24 +2,19 @@ require "rubygems"
 require 'png'
 
 class RubyGraph
-    # Precision is not functional at this point
-    attr_accessor :x_precision
-    attr_accessor :y_precision
-
     # These values determine where the X and Y axis lies.
     attr_accessor :x_pos_offset
     attr_accessor :y_pos_offset
     attr_accessor :x_neg_offset
     attr_accessor :y_neg_offset
+    attr_accessor :out_file
 
     def initialize
-        @x_precision = 1
-        @y_precision = 1
-
         @x_pos_offset = 20
         @x_neg_offset = 20
         @y_pos_offset = 200
         @y_neg_offset = 20
+        @out_file = "graph.png"
     end
 
     # Internal: This is where you define the equation you want to graph
@@ -27,6 +22,8 @@ class RubyGraph
         (x ** 2).round
     end
 
+    # Internal: This method is responsible for filling in the gaps between plotted points
+    #           to produce a smooth continous curve.
     def fill_empty_y(x, x_end, y_start, y_end, canvas)
         if x < x_end
             if x <= 0
@@ -39,16 +36,7 @@ class RubyGraph
             y_fill_mid = y_fill_start + ((y_fill_end - y_fill_start) / 2)
             y_fill_start.upto(y_fill_end) do |y_fill|
                 if y_fill >= y_start && y_fill <= y_end
-                    if x <= 0
-                        x_val = x
-                    else
-                        x_val = x
-                    end
-                    if y_fill <= y_fill_mid
-                        canvas[x_val + @x_neg_offset, y_fill + @y_neg_offset] = PNG::Color.new(255, 0, 0)
-                    else
-                        canvas[x_val + @x_neg_offset, y_fill + @y_neg_offset] = PNG::Color.new(255, 0, 0)
-                    end
+                    canvas[x + @x_neg_offset, y_fill + @y_neg_offset] = PNG::Color.new(255, 0, 0)
                 end
             end
         end
@@ -79,7 +67,7 @@ class RubyGraph
             fill_empty_y(x, x_end, y_start, y_end, canvas)
         end
         png = PNG.new(canvas)
-        png.save("graph.png")
+        png.save(@out_file)
     end
 end
 
