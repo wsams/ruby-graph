@@ -14,8 +14,6 @@ To graph, for example, `y = x^2`, setup a `RubyGraph` object and call the `graph
     rg.out_file = "graph.png"
     rg.graph { |x| (x ** 2).round }
 
-Screenshot
-==========
-This is an example of graph the equation `y = x^2`.
+This will output a PNG file just like the following.
 
 <img src="graph.png" alt="graph of y=x^2" />
