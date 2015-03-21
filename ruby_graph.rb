@@ -17,21 +17,16 @@ class RubyGraph
         @out_file = "graph.png"
     end
 
-    # Internal: This is where you define the equation you want to graph
-    def fn x
-        (x ** 2).round
-    end
-
     # Internal: This method is responsible for filling in the gaps between plotted points
     #           to produce a smooth continous curve.
     def fill_empty_y(x, x_end, y_start, y_end, canvas)
         if x < x_end
             if x <= 0
-                y_fill_start = fn(x) + 1
-                y_fill_end = fn(x - 1) - 1
+                y_fill_start = yield(x) + 1
+                y_fill_end = yield(x - 1) - 1
             else
-                y_fill_start = fn(x) + 1
-                y_fill_end = fn(x + 1) - 1
+                y_fill_start = yield(x) + 1
+                y_fill_end = yield(x + 1) - 1
             end
             y_fill_mid = y_fill_start + ((y_fill_end - y_fill_start) / 2)
             y_fill_start.upto(y_fill_end) do |y_fill|
@@ -54,7 +49,7 @@ class RubyGraph
                 # 255,255,255:white 0,0,0:black
                 r = g = b = x == 0 || y == 0 ? 0 : 255
 
-                if y == fn(x)
+                if y == yield(x)
                     # 255,0,0:red
                     r = 255
                     g = 0
@@ -64,7 +59,7 @@ class RubyGraph
                 canvas[x + @x_neg_offset, y + @y_neg_offset] = PNG::Color.new(r, g, b)
             end
 
-            fill_empty_y(x, x_end, y_start, y_end, canvas)
+            fill_empty_y(x, x_end, y_start, y_end, canvas) { |x| yield(x) }
         end
         png = PNG.new(canvas)
         png.save(@out_file)
@@ -72,4 +67,4 @@ class RubyGraph
 end
 
 rg = RubyGraph.new
-rg.graph
+rg.graph { |x| (x ** 2).round }

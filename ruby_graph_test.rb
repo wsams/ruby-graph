@@ -11,7 +11,7 @@ class TestSimpleNumber < Test::Unit::TestCase
         rg.y_pos_offset = 200
         rg.y_neg_offset = 20
         rg.out_file = "graph-test.png"
-        rg.graph
+        rg.graph { |x| (x ** 2).round }
 
         assert_equal(Digest::SHA256.file("graph.png"), Digest::SHA256.file("graph-test.png"))
     end
