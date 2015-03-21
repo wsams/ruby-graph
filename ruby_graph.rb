@@ -68,6 +68,3 @@ class RubyGraph
         png.save(@out_file)
     end
 end
-
-rg = RubyGraph.new
-rg.graph { |x| (x ** 2).round }
