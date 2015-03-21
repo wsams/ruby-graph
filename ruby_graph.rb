@@ -59,7 +59,10 @@ class RubyGraph
                     b = 0
                 end
 
-                canvas[x + @x_neg_offset, y + @y_neg_offset] = PNG::Color.new(r, g, b)
+                # This is one way to prevent this method from being called on white coordinates.
+                if g != 255
+                    canvas[x + @x_neg_offset, y + @y_neg_offset] = PNG::Color.new(r, g, b)
+                end
             end
 
             fill_empty_y(x, x_end, y_start, y_end, canvas) { |x| yield(x) }
