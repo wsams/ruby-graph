@@ -24,14 +24,14 @@ class RubyGraph
 
     # Internal: This is where you define the equation you want to graph
     def fn x
-        x ** 2
+        (x ** 2).round
     end
 
     def fill_empty_y(x, x_end, y_start, y_end, canvas)
         if x < x_end
             if x <= 0
-                y_fill_start = (fn(x + 1) + 1)
-                y_fill_end = (fn(x) - 1)
+                y_fill_start = fn(x) + 1
+                y_fill_end = fn(x - 1) - 1
             else
                 y_fill_start = fn(x) + 1
                 y_fill_end = fn(x + 1) - 1
@@ -39,7 +39,7 @@ class RubyGraph
             y_fill_mid = y_fill_start + ((y_fill_end - y_fill_start) / 2)
             y_fill_start.upto(y_fill_end) do |y_fill|
                 if y_fill >= y_start && y_fill <= y_end
-                    if x < 0
+                    if x <= 0
                         x_val = x
                     else
                         x_val = x
