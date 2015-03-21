@@ -2,10 +2,13 @@ require "rubygems"
 require 'png'
 
 class RubyGraph
-    # These values determine where the X and Y axis lies.
+    # This is the number of pixels on the positive X-axis.
     attr_accessor :x_pos_offset
+    # This is the number of pixels on the positive Y-axis.
     attr_accessor :y_pos_offset
+    # This is the number of pixels on the negative X-axis.
     attr_accessor :x_neg_offset
+    # This is the number of pixels on the negative Y-axis.
     attr_accessor :y_neg_offset
     attr_accessor :out_file
 
