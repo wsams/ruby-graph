@@ -1,15 +1,20 @@
 require "rubygems"
-require 'png'
+require "png"
 
 class RubyGraph
+
     # This is the number of pixels on the positive X-axis.
     attr_accessor :x_pos_offset
+
     # This is the number of pixels on the positive Y-axis.
     attr_accessor :y_pos_offset
+
     # This is the number of pixels on the negative X-axis.
     attr_accessor :x_neg_offset
+
     # This is the number of pixels on the negative Y-axis.
     attr_accessor :y_neg_offset
+
     attr_accessor :out_file
 
     def initialize
@@ -70,4 +75,5 @@ class RubyGraph
         png = PNG.new(canvas)
         png.save(@out_file)
     end
+
 end
